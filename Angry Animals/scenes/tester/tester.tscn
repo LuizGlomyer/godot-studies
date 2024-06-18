@@ -1,0 +1,80 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8myik2ueohx7"]
+
+[ext_resource type="Texture2D" uid="uid://dfpwsyp1hqmh5" path="res://assets/player/parrot.png" id="1_1dh6l"]
+[ext_resource type="Texture2D" uid="uid://b1yo0i3i88axb" path="res://assets/env/elementStone025.png" id="2_2lmg5"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fa40e"]
+bounce = 0.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_idls8"]
+radius = 36.0555
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hea21"]
+size = Vector2(2310, 44)
+
+[node name="Tester" type="Node2D"]
+
+[node name="Bird" type="RigidBody2D" parent="."]
+position = Vector2(397, 68)
+physics_material_override = SubResource("PhysicsMaterial_fa40e")
+
+[node name="Sprite2D" type="Sprite2D" parent="Bird"]
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("1_1dh6l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bird"]
+shape = SubResource("CircleShape2D_idls8")
+
+[node name="Bird2" type="RigidBody2D" parent="."]
+position = Vector2(341, 187)
+physics_material_override = SubResource("PhysicsMaterial_fa40e")
+
+[node name="Sprite2D" type="Sprite2D" parent="Bird2"]
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("1_1dh6l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bird2"]
+shape = SubResource("CircleShape2D_idls8")
+
+[node name="Timer" type="Timer" parent="Bird2"]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(423, 609)
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+rotation = -1.5708
+scale = Vector2(1, 10)
+texture = ExtResource("2_2lmg5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(541, -12)
+shape = SubResource("RectangleShape2D_hea21")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(-31, 538)
+rotation = 1.5708
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2"]
+rotation = -1.5708
+scale = Vector2(1, 10)
+texture = ExtResource("2_2lmg5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(541, -12)
+shape = SubResource("RectangleShape2D_hea21")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(1192, 623)
+rotation = -1.5708
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3"]
+rotation = -1.5708
+scale = Vector2(1, 10)
+texture = ExtResource("2_2lmg5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+position = Vector2(541, -12)
+shape = SubResource("RectangleShape2D_hea21")
