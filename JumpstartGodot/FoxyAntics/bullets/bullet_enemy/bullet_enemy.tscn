@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://d36cux0wscw8y"]
+
+[ext_resource type="PackedScene" uid="uid://sewmthrb2uuo" path="res://bullets/bullet_base/bullet_base.tscn" id="1_yx4lu"]
+[ext_resource type="Texture2D" uid="uid://b7qdssj1fl7ls" path="res://assets/items/bullet2.png" id="2_d3tdx"]
+
+[node name="BulletEnemy" instance=ExtResource("1_yx4lu")]
+collision_layer = 16
+collision_mask = 2
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_d3tdx")

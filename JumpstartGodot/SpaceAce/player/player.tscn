@@ -1,0 +1,87 @@
+[gd_scene load_steps=10 format=3 uid="uid://7itlwamf8dh8"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_buy3b"]
+[ext_resource type="Texture2D" uid="uid://droivgo45k20q" path="res://assets/ships/ships_human_1.png" id="1_v0nfg"]
+[ext_resource type="PackedScene" uid="uid://68iwx1xrtrjd" path="res://base_bullet/player_bullet/player_bullet.tscn" id="2_bshvh"]
+[ext_resource type="PackedScene" uid="uid://dl27s5p5y41ba" path="res://shield/shield.tscn" id="4_rgyip"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4gkx2"]
+radius = 14.1421
+
+[sub_resource type="Animation" id="Animation_eah6x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_enfv1"]
+resource_name = "fly"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_rsbmc"]
+resource_name = "turn"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j1dkr"]
+_data = {
+"RESET": SubResource("Animation_eah6x"),
+"fly": SubResource("Animation_enfv1"),
+"turn": SubResource("Animation_rsbmc")
+}
+
+[node name="Player" type="Area2D" groups=["player"]]
+collision_mask = 10
+script = ExtResource("1_buy3b")
+bullet_scene = ExtResource("2_bshvh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_v0nfg")
+hframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4gkx2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_j1dkr")
+}
+autoplay = "fly"
+
+[node name="Shield" parent="." instance=ExtResource("4_rgyip")]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

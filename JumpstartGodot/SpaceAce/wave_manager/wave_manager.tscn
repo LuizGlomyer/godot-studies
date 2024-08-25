@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://b23klj3mjilqb"]
+
+[ext_resource type="Script" path="res://wave_manager/wave_manager_res.gd" id="1_nrmlw"]
+
+[sub_resource type="Curve2D" id="Curve2D_pkvjj"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 127, -69, 0, 0, 0, 0, 127, -69, 0, 0, 0, 0, 122, 595, 0, 0, 0, 0, 122, 595, 0, 0, 0, 0, 122, 595)
+}
+point_count = 5
+
+[sub_resource type="Curve2D" id="Curve2D_wcj8r"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -88, 81, 0, 0, 0, 0, 722, 82)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_lqknt"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 705, -10, 0, 0, 0, 0, 58, 55, 0, 0, 0, 0, 57, 249, 0, 0, 0, 0, 700, 338)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_6soh4"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -54, 58, 0, 0, 0, 0, 607, 46, 0, 0, 0, 0, 606, 240, 0, 0, 0, 0, 30, 237, 0, 0, 0, 0, 34, 354, 0, 0, 0, 0, 856, 348)
+}
+point_count = 6
+
+[sub_resource type="Curve2D" id="Curve2D_jxcdl"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 39, -41, 0, 0, 0, 0, 32, 428, 0, 0, 0, 0, 162, 423, 0, 0, 0, 0, 155, 13, 0, 0, 0, 0, 383, 15, 0, 0, 0, 0, 376, 421, 0, 0, 0, 0, 585, 420, 0, 0, 0, 0, 578, -63)
+}
+point_count = 8
+
+[node name="WaveManager" type="Node2D"]
+script = ExtResource("1_nrmlw")
+
+[node name="Paths" type="Node2D" parent="."]
+
+[node name="Path2D" type="Path2D" parent="Paths"]
+curve = SubResource("Curve2D_pkvjj")
+
+[node name="Path2D2" type="Path2D" parent="Paths"]
+curve = SubResource("Curve2D_wcj8r")
+
+[node name="Path2D3" type="Path2D" parent="Paths"]
+position = Vector2(0, 296)
+curve = SubResource("Curve2D_wcj8r")
+
+[node name="Path2D4" type="Path2D" parent="Paths"]
+position = Vector2(0, 91)
+curve = SubResource("Curve2D_wcj8r")
+
+[node name="Path2D5" type="Path2D" parent="Paths"]
+curve = SubResource("Curve2D_lqknt")
+
+[node name="Path2D6" type="Path2D" parent="Paths"]
+curve = SubResource("Curve2D_6soh4")
+
+[node name="Path2D7" type="Path2D" parent="Paths"]
+curve = SubResource("Curve2D_jxcdl")
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 6.0
+autostart = true
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
