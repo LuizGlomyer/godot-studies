@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://cp6lm3yrygdrx"]
+
+[ext_resource type="Script" path="res://scripts/shaders_101.gd" id="1_ekieq"]
+[ext_resource type="Texture2D" uid="uid://dxby6hdm7q7d8" path="res://icon.svg" id="1_f12ln"]
+[ext_resource type="Shader" path="res://shaders/my_first_shader.gdshader" id="1_td3p7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lgljx"]
+shader = ExtResource("1_td3p7")
+shader_parameter/my_float = 1.5
+shader_parameter/my_color = Color(0.372804, 0.649456, 0.737853, 1)
+shader_parameter/test_int = 25
+shader_parameter/test_bool = null
+
+[node name="Shaders 101" type="Node2D"]
+script = ExtResource("1_ekieq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_lgljx")
+position = Vector2(585, 331)
+texture = ExtResource("1_f12ln")

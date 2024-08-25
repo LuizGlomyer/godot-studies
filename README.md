@@ -1,8 +1,10 @@
-# Jumpstart Godot
+# godot-studies
 
-Repository for the Godot course that I took at Udemy: [Jumpstart to 2D Game Development: Godot 4 for Beginners](https://www.udemy.com/course/jumpstart-to-2d-game-development-godot-4-for-beginners/).
+Repository for some Godot courses that I took at Udemy: 
+- [Jumpstart to 2D Game Development: Godot 4 for Beginners](https://www.udemy.com/course/jumpstart-to-2d-game-development-godot-4-for-beginners/).
+- [Godot 4 Shaders: Craft Stunning Visuals](https://www.udemy.com/course/godot-4-shaders/)
 
-Here a the list of the developed games and some things that were learned.
+Here is a list of the developed games and the main things that were learned.
 
 
 ## Tappy Plane
