@@ -1,8 +1,47 @@
-[gd_scene load_steps=6 format=3 uid="uid://bw86fsv6rvi5h"]
+[gd_scene load_steps=37 format=3 uid="uid://bw86fsv6rvi5h"]
 
 [ext_resource type="Script" path="res://scripts/common_techniques.gd" id="1_0ugy3"]
 [ext_resource type="Texture2D" uid="uid://dw27ks2iy6r18" path="res://assets/other/Terrain (16x16).png" id="2_4ntks"]
 [ext_resource type="PackedScene" uid="uid://cf8ow35myt7tq" path="res://scenes/player.tscn" id="2_ttseq"]
+[ext_resource type="Shader" path="res://shaders/scrolling_bg.gdshader" id="4_mtwy4"]
+[ext_resource type="Texture2D" uid="uid://d3wpsjuh5t4q4" path="res://assets/background/Green.png" id="5_tgp1e"]
+[ext_resource type="Shader" path="res://shaders/grayscale.gdshader" id="6_x865u"]
+[ext_resource type="Texture2D" uid="uid://b4cgytxlrs4ak" path="res://assets/other/End.png" id="7_1a3cx"]
+[ext_resource type="Shader" path="res://shaders/map_to_gradient.gdshader" id="8_mthto"]
+[ext_resource type="Shader" path="res://shaders/screen_reading.gdshader" id="9_xmi14"]
+[ext_resource type="Texture2D" uid="uid://w67qu37jpvs2" path="res://icon.svg" id="10_ppyry"]
+[ext_resource type="Shader" path="res://shaders/dissolve.gdshader" id="11_t2r0f"]
+[ext_resource type="Texture2D" uid="uid://jgyxm4826yuh" path="res://assets/other/Rock Head.png" id="12_0el0e"]
+[ext_resource type="Shader" path="res://shaders/masking.gdshader" id="13_f664w"]
+[ext_resource type="Texture2D" uid="uid://daw35yrqwa2a5" path="res://assets/other/Spike Head.png" id="14_3qxn7"]
+[ext_resource type="Texture2D" uid="uid://dage6k6brje84" path="res://assets/other/mask2.jpg" id="14_m0ptw"]
+[ext_resource type="Shader" path="res://shaders/distortion.gdshader" id="16_yu0re"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xwstm"]
+shader = ExtResource("4_mtwy4")
+shader_parameter/tiling = Vector2(15, 15)
+shader_parameter/offset = Vector2(1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7vqj4"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hy8fk"]
+seamless = true
+noise = SubResource("FastNoiseLite_7vqj4")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_khbop"]
+noise_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yhj6j"]
+seamless = true
+noise = SubResource("FastNoiseLite_khbop")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8afjl"]
+shader = ExtResource("16_yu0re")
+shader_parameter/offset1 = Vector2(0.1, 0.1)
+shader_parameter/offset2 = Vector2(0.1, 0.1)
+shader_parameter/distortion_strength = -0.00999995
+shader_parameter/noise_tex1 = SubResource("NoiseTexture2D_hy8fk")
+shader_parameter/noise_tex2 = SubResource("NoiseTexture2D_yhj6j")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sehxt"]
 texture = ExtResource("2_4ntks")
@@ -452,8 +491,100 @@ texture = ExtResource("2_4ntks")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_sehxt")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fnrtf"]
+shader = ExtResource("6_x865u")
+
+[sub_resource type="Gradient" id="Gradient_axok7"]
+offsets = PackedFloat32Array(0.015873, 0.571429, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.71, 0.1207, 0.130522, 1, 0.890196, 0.788235, 0.0509804, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_c844s"]
+gradient = SubResource("Gradient_axok7")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q6ss4"]
+shader = ExtResource("8_mthto")
+shader_parameter/gradient_texture = SubResource("GradientTexture2D_c844s")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_v7bbk"]
+offset = Vector3(58.82, 0, 0)
+fractal_ping_pong_strength = 5.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_r31d2"]
+noise = SubResource("FastNoiseLite_v7bbk")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hbwcd"]
+shader = ExtResource("11_t2r0f")
+shader_parameter/dissolve_percentage = 0.0
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_r31d2")
+
+[sub_resource type="Animation" id="Animation_13o4s"]
+resource_name = "dissolve"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Dissolve:material:shader_parameter/dissolve_percentage")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_bsv6s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Dissolve:material:shader_parameter/dissolve_percentage")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b0cuy"]
+_data = {
+"RESET": SubResource("Animation_bsv6s"),
+"dissolve": SubResource("Animation_13o4s")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_17eks"]
+shader = ExtResource("13_f664w")
+shader_parameter/mask_texture = ExtResource("14_m0ptw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6jwdk"]
+shader = ExtResource("9_xmi14")
+
 [node name="CommonTechniques" type="Node2D"]
 script = ExtResource("1_0ugy3")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -100
+
+[node name="ScrollingBackground" type="Sprite2D" parent="CanvasLayer"]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_xwstm")
+position = Vector2(575, 346)
+scale = Vector2(19.0312, 19.0312)
+texture = ExtResource("5_tgp1e")
+region_rect = Rect2(0, 0, 1000, 1000)
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="Distortion" type="Sprite2D" parent="CanvasLayer2"]
+z_index = 999
+texture_repeat = 2
+material = SubResource("ShaderMaterial_8afjl")
+position = Vector2(576, 288)
+scale = Vector2(9.45312, 6.125)
+texture = ExtResource("10_ppyry")
 
 [node name="TileMap" type="TileMap" parent="."]
 scale = Vector2(3, 3)
@@ -463,3 +594,40 @@ layer_0/tile_data = PackedInt32Array(655361, 458752, 4, 655362, 458752, 4, 65536
 
 [node name="Player" parent="." instance=ExtResource("2_ttseq")]
 position = Vector2(575, 314)
+
+[node name="Grayscale" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_fnrtf")
+position = Vector2(260, 384)
+scale = Vector2(3, 3)
+texture = ExtResource("7_1a3cx")
+
+[node name="Gradient" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_q6ss4")
+position = Vector2(465, 384)
+scale = Vector2(3, 3)
+texture = ExtResource("7_1a3cx")
+
+[node name="Dissolve" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_hbwcd")
+position = Vector2(842, 381)
+scale = Vector2(3, 3)
+texture = ExtResource("12_0el0e")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_b0cuy")
+}
+autoplay = "dissolve"
+
+[node name="Masking" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_17eks")
+position = Vector2(354, 254)
+scale = Vector2(3, 3)
+texture = ExtResource("14_3qxn7")
+
+[node name="ScreenReading" type="Sprite2D" parent="."]
+z_index = 999
+material = SubResource("ShaderMaterial_6jwdk")
+position = Vector2(597, 227)
+scale = Vector2(1.87891, 9.9375)
+texture = ExtResource("10_ppyry")
